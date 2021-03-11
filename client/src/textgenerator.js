@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
-import axios from "./axios";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { receiveText } from "./actions";
 
 export default function Textgenerator() {
-    const [text, setText] = useState("");
+    const dispatch = useDispatch();
+    const generatedText = useSelector((state) => state && state.generatedText);
+
     useEffect(() => {
-        axios
-            .get("https://hipsum.co/api/?type=hipster-centric&sentences=3")
-            .then(({ data }) => {
-                console.log(data[0]);
-                setText(data[0]);
-            });
+        dispatch(receiveText());
     }, []);
+
     return (
         <>
             {" "}
             <h3>My Textgenerator</h3>
-            {text && <p>{text}</p>}
+            {generatedText && <p>{generatedText}</p>}
         </>
     );
 }
