@@ -7,11 +7,10 @@ export async function receiveText() {
     // console.log("data generated text in actions", data[0].charAt(0));
 
     let arrayOfLetterObjects = [];
-    
+
     for (let i = 0; i < data[0].length; i++) {
         let objectOfLetters = {
             letter: data[0].charAt(i),
-            typingStatus: "neutral",
         };
         arrayOfLetterObjects.push(objectOfLetters);
     }

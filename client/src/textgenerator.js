@@ -6,14 +6,13 @@ export default function Textgenerator() {
     const dispatch = useDispatch();
     // const [restart, setRestart] = useState(false);
     const generatedText = useSelector((state) => state && state.generatedText);
-    //console.log("text in tg", generatedText);
+    console.log("text in tg", generatedText);
 
     useEffect(() => {
-        dispatch(receiveText("j"));
-       
-        // setStatus("incorrectTyping");
+        dispatch(receiveText());
     }, []);
 
+    
     return (
         <>
             {" "}
@@ -21,7 +20,7 @@ export default function Textgenerator() {
             <div>
                 {generatedText &&
                     generatedText.map((singleLetter, index) => (
-                        <span className={singleLetter.statusColor} key={index}>
+                        <span className={singleLetter.typingStatus} key={index}>
                             {singleLetter.letter}
                         </span>
                     ))}

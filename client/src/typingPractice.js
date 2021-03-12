@@ -5,9 +5,7 @@ import { updateStatusColor } from "./actions";
 export default function TypingPractice() {
     const dispatch = useDispatch();
     const generatedText = useSelector((state) => state && state.generatedText);
-    console.log("generatedText in tp", generatedText);
-
-    //   useEffect(() => dispatch(updateStatusColor("i", "correct-typing")));
+    // console.log("generatedText in tp", generatedText);
 
     const handleKeyDown = (event) => {
         console.log("typing");
