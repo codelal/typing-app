@@ -3,6 +3,7 @@ export function reducer(state = {}, action) {
         state = {
             ...state,
             generatedText: action.generatedText,
+            progressValue: action.progressValue,
         };
     }
 
@@ -21,5 +22,16 @@ export function reducer(state = {}, action) {
             }),
         };
     }
+
+    if (action.type == "UPDATE_PROGRESS") {
+        state = {
+            ...state,
+            progressValue: {
+                ...state.progressValue,
+                value: action.index,
+            },
+        };
+    }
+
     return state;
 }

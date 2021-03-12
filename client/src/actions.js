@@ -4,6 +4,7 @@ export async function receiveText() {
     const { data } = await axios.get(
         "https://hipsum.co/api/?type=hipster-centric&sentences=2"
     );
+    //Change API later because API returns smt the same text
     // console.log("data generated text in actions", data[0].charAt(0));
 
     let arrayOfLetterObjects = [];
@@ -20,6 +21,11 @@ export async function receiveText() {
     return {
         type: "RECEIVE_TEXT",
         generatedText: arrayOfLetterObjects,
+        progressValue: {
+            maxValue: arrayOfLetterObjects.length,
+            minValue: 0,
+            value: 0,
+        },
     };
 }
 
@@ -28,6 +34,14 @@ export function updateStatusColor(index, typingStatus) {
     return {
         type: "UPDATE_STATUS_COLOR",
         typingStatus: typingStatus,
+        index: index,
+    };
+}
+
+export function updateProgress(index) {
+    console.log("index in actions", index);
+    return {
+        type: "UPDATE_PROGRESS",
         index: index,
     };
 }

@@ -6,17 +6,24 @@ export default function Textgenerator() {
     const dispatch = useDispatch();
     // const [restart, setRestart] = useState(false);
     const generatedText = useSelector((state) => state && state.generatedText);
-    console.log("text in tg", generatedText);
+    console.log("text in tg");
 
     useEffect(() => {
         dispatch(receiveText());
     }, []);
 
-    
     return (
         <>
             {" "}
             <h3>My Textgenerator</h3>
+            <button
+                onClick={() => {
+                    console.log("restart");
+                    dispatch(receiveText());
+                }}
+            >
+                Restart
+            </button>
             <div>
                 {generatedText &&
                     generatedText.map((singleLetter, index) => (
@@ -25,13 +32,6 @@ export default function Textgenerator() {
                         </span>
                     ))}
             </div>
-            <button
-                onClick={() => {
-                    console.log("restart");
-                }}
-            >
-                Restart
-            </button>
         </>
     );
 }

@@ -3,18 +3,9 @@ body {
     text-align: center;
 }
 
-/* .app {
-    display: grid;
-    justify-items: center;
-} */
-
 .text-container {
     display: flex;
     flex-direction: row;
-}
-
-span {
-    width: auto;
 }
 
 .generated-text {
@@ -38,6 +29,41 @@ span {
     color: red;
 }
 
-.neutral {
-    color: black;
+button {
+    margin: 2rem;
+}
+
+
+/*progress-bar*/
+.progress-bar {
+    margin: 1rem;
+    width: 95%;
+    height: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(100, 149, 237, 0.3);
+    border-radius: 50px;
+}
+
+.loading-progress {
+    background-color: rgb(100, 149, 237);
+    min-width: 3%;
+    height: 20px;
+    border-radius: 50px;
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 11px;
+    padding-right: 0.5rem;
+    padding-left: 1rem;
+}
+
+.error {
+    width: 100%;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
 }
