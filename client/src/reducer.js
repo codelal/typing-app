@@ -4,6 +4,22 @@ export function reducer(state = {}, action) {
             ...state,
             generatedText: action.generatedText,
         };
-        return state;
     }
+
+    if (action.type == "UPDATE_STATUS_COLOR") {
+        state = {
+            ...state,
+            generatedText: state.generatedText.map((letterObject, index) => {
+                if (index == action.index) {
+                    return {
+                        ...letterObject,
+                        typingStatus: action.typingStatus,
+                    };
+                } else {
+                    return letterObject;
+                }
+            }),
+        };
+    }
+    return state;
 }

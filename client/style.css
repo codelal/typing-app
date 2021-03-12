@@ -2,3 +2,42 @@ body {
     background-color: rgb(206, 233, 247);
     text-align: center;
 }
+
+/* .app {
+    display: grid;
+    justify-items: center;
+} */
+
+.text-container {
+    display: flex;
+    flex-direction: row;
+}
+
+span {
+    width: auto;
+}
+
+.generated-text {
+    border: 0.1rem solid black;
+    text-align: justify;
+    width: 60%;
+    height: auto;
+}
+
+.typing {
+    width: 60%;
+    height: 5rem;
+    border: 0.1rem solid black;
+}
+
+.correct-typing {
+    color: green;
+}
+
+.incorrect-typing {
+    color: red;
+}
+
+.neutral {
+    color: black;
+}
