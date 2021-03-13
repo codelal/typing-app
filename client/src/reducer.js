@@ -33,5 +33,11 @@ export function reducer(state = {}, action) {
         };
     }
 
+    if (action.type == "SET_TIMER") {
+        state = {
+            ...state,
+            timer: action.timer,
+        };
+    }
     return state;
 }

@@ -4,9 +4,7 @@ import { receiveText } from "./actions";
 
 export default function Textgenerator() {
     const dispatch = useDispatch();
-    // const [restart, setRestart] = useState(false);
     const generatedText = useSelector((state) => state && state.generatedText);
-    console.log("text in tg");
 
     useEffect(() => {
         dispatch(receiveText());
