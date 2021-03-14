@@ -1,27 +1,24 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSeconds } from "./actions";
 
-export default function Timer({ timerOn }) {
-    const [time, setTime] = useState(0);
-
-    console.log("timerOn in timer", timerOn);
+export default function Timer() {
+    const dispatch = useDispatch();
+    const timerIsRunning = useSelector(
+        (state) => state && state.timerIsRunning
+    );
+    const seconds = useSelector((state) => state && state.seconds);
+    let intervalId = null;
 
     useEffect(() => {
-        let interval = null;
-
-        if (timerOn) {
-            interval = setInterval(() => {
-                setTime((prevTime) => prevTime + 1000);
+        if (timerIsRunning) {
+            intervalId = setInterval(() => {
+                (prevTime) => prevTime + 1000;
             }, 1000);
-        } else {
-            clearInterval(interval);
+            dispatch(setSeconds(intervalId));
         }
-        return () => clearInterval(interval);
-    }, [timerOn]);
+        return () => clearInterval(intervalId);
+    }, [timerIsRunning, seconds]);
 
-    return (
-        <>
-            <h3>Timer</h3>
-            <div>{time / 1000} Seconds</div>
-        </>
-    );
+    return <>{seconds && seconds / 1000}Seconds</>;
 }

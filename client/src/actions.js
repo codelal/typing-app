@@ -37,17 +37,26 @@ export function updateStatusColor(index, typingStatus) {
 }
 
 export function updateProgress(index) {
-    console.log("index in actions", index);
+    //console.log("index in actions", index);
     return {
         type: "UPDATE_PROGRESS",
         index: index + 1,
     };
 }
 
-export function setTimer(status) {
-    console.log("timer status in actions", status);
+export function timerIsRunning(status) {
+    //  console.log("timer status in actions", status);
     return {
-        type: "SET_TIMER",
-        timer: status,
+        type: "TIMER_IS_RUNNING",
+        timerIsRunning: status,
+    };
+}
+
+export function setSeconds(seconds) {
+    console.log("seconds in actions", seconds);
+
+    return {
+        type: "SET_SECONDS",
+        seconds: seconds,
     };
 }

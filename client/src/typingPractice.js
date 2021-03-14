@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateStatusColor, updateProgress, setTimer } from "./actions";
+import { updateStatusColor, updateProgress, timerIsRunning } from "./actions";
 import ProgressBar from "./ProgressBar";
 import Timer from "./timer";
 
@@ -11,40 +11,33 @@ export default function TypingPractice() {
     const timer = useSelector((state) => state && state.timer);
     //console.log("progressValue", progressValue);
 
-    useEffect(() => {}, [progressValue]);
+    useEffect(() => {}, [progressValue, timer]);
 
     const handleKeyDown = (event) => {
         const index = event.target.value.length;
         dispatch(updateProgress(index));
 
+        if (index === generatedText.length - 1) {
+            document.getElementById("input").readOnly = true;
+            dispatch(timerIsRunning(false));
+        } else {
+            dispatch(timerIsRunning(true));
+            //console.log("timer is running", index, generatedText.length);
+        }
+
         if (event.key === generatedText[index].letter) {
             dispatch(updateStatusColor(index, "correct-typing"));
+            //console.log("index in key", index);
         } else {
             dispatch(updateStatusColor(index, "incorrect-typing"));
         }
-        if (index === generatedText.length-1) {
-            dispatch(setTimer(false));
-            console.log("timer stop");
-        } else {
-            dispatch(setTimer(true));
-            console.log("timer is running", index, generatedText.length);
-        }
     };
-
-    // const setTimer = (event) => {
-    //     console.log(
-    //         "setTimer",
-    //         event.target.value.length,
-    //         generatedText.length
-    //     );
-    //
-    // };
 
     return (
         <>
-            <h3>typing - pactice:</h3>
-            {timer && <Timer timerOn={timer} />}
-            {!timer && <Timer timerOn={timer} />}
+            <h3>typing - practice:</h3>
+            {<Timer />}
+
             {progressValue && (
                 <>
                     <ProgressBar
@@ -54,7 +47,7 @@ export default function TypingPractice() {
                     />
                 </>
             )}
-            <input onKeyDown={handleKeyDown}></input>
+            <input id="input" onKeyDown={handleKeyDown}></input>
         </>
     );
 }

@@ -7,7 +7,6 @@ export default function App() {
         <div className="app">
             <h1>typing-practice-app</h1>
             <Textgenerator />
-           
             <TypingPractice />
         </div>
     );
