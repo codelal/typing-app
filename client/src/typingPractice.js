@@ -1,17 +1,21 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateStatusColor, updateProgress, timerIsRunning } from "./actions";
-import ProgressBar from "./ProgressBar";
+import {
+    updateStatusColor,
+    updateProgress,
+    timerStatus,
+    receiveText,
+} from "./actions";
+import ProgressBar from "./progressBar";
 import Timer from "./timer";
 
 export default function TypingPractice() {
     const dispatch = useDispatch();
     const generatedText = useSelector((state) => state && state.generatedText);
     const progressValue = useSelector((state) => state && state.progressValue);
-    const timer = useSelector((state) => state && state.timer);
     //console.log("progressValue", progressValue);
 
-    useEffect(() => {}, [progressValue, timer]);
+    useEffect(() => {}, [progressValue]);
 
     const handleKeyDown = (event) => {
         const index = event.target.value.length;
@@ -19,9 +23,9 @@ export default function TypingPractice() {
 
         if (index === generatedText.length - 1) {
             document.getElementById("input").readOnly = true;
-            dispatch(timerIsRunning(false));
+            dispatch(timerStatus("stop"));
         } else {
-            dispatch(timerIsRunning(true));
+            dispatch(timerStatus("runs"));
             //console.log("timer is running", index, generatedText.length);
         }
 
@@ -33,11 +37,17 @@ export default function TypingPractice() {
         }
     };
 
+    const restart = () => {
+        console.log("restart");
+        dispatch(receiveText());
+        document.getElementById("input").value = "";
+        dispatch(timerStatus("clear"));
+    };
+
     return (
         <>
             <h3>typing - practice:</h3>
             {<Timer />}
-
             {progressValue && (
                 <>
                     <ProgressBar
@@ -48,6 +58,8 @@ export default function TypingPractice() {
                 </>
             )}
             <input id="input" onKeyDown={handleKeyDown}></input>
+            <br />
+            <button onClick={restart}>Restart</button>
         </>
     );
 }

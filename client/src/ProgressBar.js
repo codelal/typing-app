@@ -5,7 +5,6 @@ export default function ProgressBar({ value, maxValue, minValue }) {
     const [progress, setProgress] = useState(0);
     //console.log("inpg", value, maxValue, minValue);
 
-
     useEffect(() => {
         if (value >= minValue && value <= maxValue) {
             setProgress((value / (maxValue - minValue)) * 100);
@@ -15,7 +14,6 @@ export default function ProgressBar({ value, maxValue, minValue }) {
         }
     }, [value, maxValue, minValue]);
 
-    
     return (
         <>
             <div className="progress-bar">
@@ -24,7 +22,7 @@ export default function ProgressBar({ value, maxValue, minValue }) {
                         className="loading-progress"
                         style={{ width: progress + "%" }}
                     >
-                        {progress}%
+                        {Math.round(progress)}%
                     </div>
                 )}
                 {error && <div className="error">⚠️</div>}

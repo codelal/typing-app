@@ -2,16 +2,16 @@ import axios from "./axios";
 
 export async function receiveText() {
     const { data } = await axios.get(
-        "https://hipsum.co/api/?type=hipster-centric&sentences=1"
+        "http://dinoipsum.herokuapp.com/api/?format=json&words=10&paragraphs=3"
     );
-    //Change API later because API returns smt the same text
-    // console.log("data generated text in actions", data[0].charAt(0));
 
+    // console.log("data generated text in actions", data[0]);
+    let arrayToString = data[0].join(" ");
     let arrayOfLetterObjects = [];
 
-    for (let i = 0; i < data[0].length; i++) {
+    for (let i = 0; i < arrayToString.length; i++) {
         let objectOfLetters = {
-            letter: data[0].charAt(i),
+            letter: arrayToString.charAt(i),
         };
         arrayOfLetterObjects.push(objectOfLetters);
     }
@@ -44,19 +44,19 @@ export function updateProgress(index) {
     };
 }
 
-export function timerIsRunning(status) {
+export function timerStatus(status) {
     //  console.log("timer status in actions", status);
     return {
         type: "TIMER_IS_RUNNING",
-        timerIsRunning: status,
+        timerStatus: status,
     };
 }
 
-export function setSeconds(seconds) {
+export function setTotalSeconds(seconds) {
     console.log("seconds in actions", seconds);
 
     return {
-        type: "SET_SECONDS",
+        type: "SET_TOTAL_SECONDS",
         seconds: seconds,
     };
 }

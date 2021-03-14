@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSeconds } from "./actions";
+import { setTotalSeconds } from "./actions";
 
 export default function Timer() {
+    const [time, setTime] = useState(0);
     const dispatch = useDispatch();
-    const timerIsRunning = useSelector(
-        (state) => state && state.timerIsRunning
-    );
-    const seconds = useSelector((state) => state && state.seconds);
-    let intervalId = null;
+    const timerStatus = useSelector((state) => state && state.timerStatus);
 
     useEffect(() => {
-        if (timerIsRunning) {
+        let intervalId = 0;
+        if (timerStatus == "runs") {
             intervalId = setInterval(() => {
-                (prevTime) => prevTime + 1000;
+                setTime((prevTime) => prevTime + 1000);
             }, 1000);
-            dispatch(setSeconds(intervalId));
+            return () => clearInterval(intervalId);
+        } else if (timerStatus == "clear") {
+            setTime(0);
         }
-        return () => clearInterval(intervalId);
-    }, [timerIsRunning, seconds]);
+        dispatch(setTotalSeconds(time / 1000));
+    }, [timerStatus]);
 
-    return <>{seconds && seconds / 1000}Seconds</>;
+    return <>{time / 1000} Seconds</>;
 }

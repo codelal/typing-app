@@ -36,11 +36,11 @@ export function reducer(state = {}, action) {
     if (action.type == "TIMER_IS_RUNNING") {
         state = {
             ...state,
-            timerIsRunning: action.timerIsRunning,
+            timerStatus: action.timerStatus,
         };
     }
 
-    if (action.type == "SET_SECONDS") {
+    if (action.type == "SET_TOTAL_SECONDS") {
         state = {
             ...state,
             seconds: action.seconds,

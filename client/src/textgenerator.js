@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { receiveText } from "./actions";
 
@@ -14,14 +14,6 @@ export default function Textgenerator() {
         <>
             {" "}
             <h3>My Textgenerator</h3>
-            <button
-                onClick={() => {
-                    console.log("restart");
-                    dispatch(receiveText());
-                }}
-            >
-                Restart
-            </button>
             <div>
                 {generatedText &&
                     generatedText.map((singleLetter, index) => (
@@ -29,6 +21,7 @@ export default function Textgenerator() {
                             {singleLetter.letter}
                         </span>
                     ))}
+                <br />
             </div>
         </>
     );
