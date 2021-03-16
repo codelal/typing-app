@@ -53,10 +53,14 @@ export function timerStatus(status) {
 }
 
 export function setTotalSeconds(seconds) {
-    console.log("seconds in actions", seconds);
-
     return {
-        type: "SET_TOTAL_SECONDS",
+        type: "TOTAL_SECONDS",
         seconds: seconds,
+    };
+}
+
+export function correctTyping() {
+    return {
+        type: "CORRECT_TYPING",
     };
 }

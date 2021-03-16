@@ -9,6 +9,7 @@ export default function Timer() {
 
     useEffect(() => {
         let intervalId = 0;
+        //change later: start timer with 1
         if (timerStatus == "runs") {
             intervalId = setInterval(() => {
                 setTime((prevTime) => prevTime + 1000);

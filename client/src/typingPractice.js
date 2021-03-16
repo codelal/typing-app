@@ -5,9 +5,11 @@ import {
     updateProgress,
     timerStatus,
     receiveText,
+    correctTyping,
 } from "./actions";
 import ProgressBar from "./progressBar";
 import Timer from "./timer";
+import Statistic from "./statistic";
 
 export default function TypingPractice() {
     const dispatch = useDispatch();
@@ -31,6 +33,7 @@ export default function TypingPractice() {
 
         if (event.key === generatedText[index].letter) {
             dispatch(updateStatusColor(index, "correct-typing"));
+            dispatch(correctTyping());
             //console.log("index in key", index);
         } else {
             dispatch(updateStatusColor(index, "incorrect-typing"));
@@ -47,6 +50,7 @@ export default function TypingPractice() {
     return (
         <>
             <h3>typing - practice:</h3>
+            <Statistic />
             {<Timer />}
             {progressValue && (
                 <>

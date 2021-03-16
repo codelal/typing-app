@@ -40,11 +40,18 @@ export function reducer(state = {}, action) {
         };
     }
 
-    if (action.type == "SET_TOTAL_SECONDS") {
+    if (action.type == "TOTAL_SECONDS") {
         state = {
             ...state,
             seconds: action.seconds,
         };
+    }
+
+    if (action.type == "CORRECT_TYPING") {
+        // state = {
+        //     ...state,
+        //     correctTyping: 
+        // };
     }
     return state;
 }
