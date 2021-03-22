@@ -50,8 +50,22 @@ export function reducer(state = {}, action) {
     if (action.type == "CORRECT_TYPING") {
         // state = {
         //     ...state,
-        //     correctTyping: 
+        //     correctTyping: ...state.correctTyping + 1
         // };
+    }
+
+    if (action.type == "USER NAME") {
+        state = {
+            ...state,
+            userName: action.userName,
+        };
+    }
+
+    if (action.type == "HIDE REGISTER") {
+        state = {
+            ...state,
+            hideRegister: action.hideRegister,
+        };
     }
     return state;
 }

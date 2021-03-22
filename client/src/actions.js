@@ -64,3 +64,23 @@ export function correctTyping() {
         type: "CORRECT_TYPING",
     };
 }
+
+export async function submitUserName(input) {
+    let userName = {
+        userName: input,
+    };
+    const { data } = await axios.post("/api/submit-user-name", userName);
+    if (data.success == true) {
+        return {
+            type: "USER NAME",
+            userName: data.userName,
+        };
+    }
+}
+
+export function hideRegister(value) {
+    return {
+        type: "HIDE REGISTER",
+        hideRegister: value,
+    };
+}

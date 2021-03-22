@@ -70,3 +70,18 @@ button {
     align-items: center;
     border-radius: 50px;
 }
+
+.register {
+    background-color: rgb(100, 149, 237);
+    position: absolute;
+    height: 10rem;
+    width: 20rem;
+    margin-top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.close-x {
+    padding-left: 90%;
+    border: 0.2rem solid black;
+}

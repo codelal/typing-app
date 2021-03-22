@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Textgenerator from "./textgenerator";
 import {
     updateStatusColor,
     updateProgress,
@@ -9,7 +11,6 @@ import {
 } from "./actions";
 import ProgressBar from "./progressBar";
 import Timer from "./timer";
-import Statistic from "./statistic";
 
 export default function TypingPractice() {
     const dispatch = useDispatch();
@@ -50,7 +51,7 @@ export default function TypingPractice() {
     return (
         <>
             <h3>typing - practice:</h3>
-            <Statistic />
+            <Textgenerator />
             {<Timer />}
             {progressValue && (
                 <>
@@ -64,6 +65,11 @@ export default function TypingPractice() {
             <input id="input" onKeyDown={handleKeyDown}></input>
             <br />
             <button onClick={restart}>Restart</button>
+            <br />
+            <button>
+                {" "}
+                <Link to="/challenge-others">Play with Others</Link>
+            </button>
         </>
     );
 }
