@@ -13,7 +13,7 @@ export default function Register() {
     };
 
     const submitInput = () => {
-        if (input.length > 0) {
+        if (input.length > 1) {
             dispatch(submitUserName(input));
             dispatch(hideRegister(true));
         } else {
@@ -24,7 +24,7 @@ export default function Register() {
     return (
         <div className="register">
             {error && <p>{error}</p>}
-            {<p>Please enter you Name</p>}
+            {<p>Please enter you name</p>}
             <input onChange={handleInput}></input>
             <button onClick={submitInput}>Submit</button>
         </div>

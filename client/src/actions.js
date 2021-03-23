@@ -84,3 +84,12 @@ export function hideRegister(value) {
         hideRegister: value,
     };
 }
+
+export function receiveOnlinersList(data) {
+    console.log("onliners list in action", data.data);
+
+    return {
+        type: "RECEIVE_ONLINERS_LIST",
+        onlinersList: data.data,
+    };
+}

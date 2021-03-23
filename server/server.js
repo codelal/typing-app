@@ -10,6 +10,7 @@ const io = require("socket.io")(server, {
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
 });
 const db = require("./db");
+let onlineUsers = {};
 
 app.use(compression());
 
@@ -64,14 +65,35 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
 // socket.io
 io.on("connection", (socket) => {
     console.log(`Socker with id ${socket.id} has connected`);
+    const userId = socket.request.session.userId;
     //const userId = socket.request.session.userId;
+    if (!userId) {
+        return socket.disconnect(true);
+    }
+
+    onlineUsers[socket.id] = userId;
+
+    let arrOfIds = [...new Set(Object.values(onlineUsers))];
+
+    db.getOnlinePlayersByIds(arrOfIds)
+        .then(({ rows }) => {
+            // console.log("getOnlineUsersByIds", rows);
+            io.sockets.emit("online users", {
+                data: rows,
+            });
+        })
+        .catch((err) => console.log("getOnlineUsersByIds", err));
+
+    socket.on("user disconnect", () => {
+        delete onlineUsers[socket.id];
+    });
 
     socket.on("Disconnect", () => {
         console.log(`Socker with id ${socket.id} has disconnected`);

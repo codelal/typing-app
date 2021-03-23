@@ -10,3 +10,10 @@ module.exports.insertUserName = (userName) => {
         [userName]
     );
 };
+
+module.exports.getOnlinePlayersByIds = (arrayOfIds) => {
+    return db.query(
+        `SELECT id, username FROM statistic WHERE id = ANY($1)`,
+        [arrayOfIds]
+    );
+};

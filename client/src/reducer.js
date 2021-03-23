@@ -67,5 +67,13 @@ export function reducer(state = {}, action) {
             hideRegister: action.hideRegister,
         };
     }
+
+    if (action.type == "RECEIVE_ONLINERS_LIST") {
+        state = {
+            ...state,
+            onlinersList: action.onlinersList,
+        };
+    }
+
     return state;
 }
