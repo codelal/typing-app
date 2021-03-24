@@ -61,6 +61,18 @@ app.post("/api/submit-user-name", (req, res) => {
         });
 });
 
+// app.get("/register", (req, res) => {
+//     console.log("welcome in server");
+//     if (req.session.userId) {
+//         console.log("cookie", req.session.userId);
+//         res.redirect("/");
+//     } else {
+//         console.log("no cookie", req.session.userId);
+//         //res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+//         res.redirect("/register");
+//     }
+// });
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
@@ -91,9 +103,12 @@ io.on("connection", (socket) => {
         })
         .catch((err) => console.log("getOnlineUsersByIds", err));
 
-    socket.on("user disconnect", () => {
-        delete onlineUsers[socket.id];
+    socket.on("challenge player", (id) => {
+        console.log("id in socket server", id);
     });
+    // socket.on("user disconnect", () => {
+    //     delete onlineUsers[socket.id];
+    // });
 
     socket.on("Disconnect", () => {
         console.log(`Socker with id ${socket.id} has disconnected`);

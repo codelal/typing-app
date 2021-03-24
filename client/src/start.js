@@ -11,7 +11,9 @@ const store = createStore(
     reducer,
     composeWithDevTools(applyMiddleware(reduxPromise))
 );
+
 init(store);
+
 ReactDOM.render(
     <Provider store={store}>
         <App />

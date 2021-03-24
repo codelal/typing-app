@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { submitUserName, hideRegister } from "./actions";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { submitUserName } from "./actions";
 
 export default function Register() {
     const dispatch = useDispatch();
@@ -15,7 +15,6 @@ export default function Register() {
     const submitInput = () => {
         if (input.length > 1) {
             dispatch(submitUserName(input));
-            dispatch(hideRegister(true));
         } else {
             setError("You need a username to play");
         }
@@ -23,6 +22,7 @@ export default function Register() {
 
     return (
         <div className="register">
+            <h3>register</h3>
             {error && <p>{error}</p>}
             {<p>Please enter you name</p>}
             <input onChange={handleInput}></input>

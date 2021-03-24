@@ -71,6 +71,7 @@ export async function submitUserName(input) {
     };
     const { data } = await axios.post("/api/submit-user-name", userName);
     if (data.success == true) {
+        
         return {
             type: "USER NAME",
             userName: data.userName,
@@ -78,18 +79,18 @@ export async function submitUserName(input) {
     }
 }
 
-export function hideRegister(value) {
-    return {
-        type: "HIDE REGISTER",
-        hideRegister: value,
-    };
-}
-
 export function receiveOnlinersList(data) {
-    console.log("onliners list in action", data.data);
+    //console.log("onliners list in action", data.data);
 
     return {
         type: "RECEIVE_ONLINERS_LIST",
         onlinersList: data.data,
     };
 }
+
+// export async function challengePlayer(id) {
+//     const playerId = {
+//         playerId: id,
+//     };
+//     const { data } = await axios.post("api/challenge-player", playerId);
+// }
