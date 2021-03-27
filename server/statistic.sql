@@ -9,5 +9,5 @@
 );
 
 INSERT INTO statistic (username) VALUES ('player1');
-INSERT INTO statistic (username) VALUES ('player');
+INSERT INTO statistic (username) VALUES ('player2');
 INSERT INTO statistic (username) VALUES ('player3');

@@ -58,13 +58,14 @@ export function reducer(state = {}, action) {
         state = {
             ...state,
             userName: action.userName,
+            
         };
     }
 
     if (action.type == "RECEIVE_ONLINERS_LIST") {
         state = {
             ...state,
-            onlinersList: action.onlinersList,
+            onlinePlayersList: action.onlinePlayersList,
         };
     }
 

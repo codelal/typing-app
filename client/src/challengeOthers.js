@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-//import { challengePlayer } from "./actions";
 import { socket } from "./socket";
 
 export default function ChallengeOthers() {
-    const dispatch = useDispatch();
-    const hideRegister = useSelector((state) => state && state.hideRegister);
     const onlinePlayersList = useSelector(
-        (state) => state && state.onlinersList
+        (state) => state && state.onlinePlayersList
     );
 
     console.log("onlinePlayersList", onlinePlayersList);
+
+    useEffect(() => {}, [onlinePlayersList]);
 
     const challengePlayer = (id) => {
         socket.emit("challenge player", id);

@@ -10,6 +10,7 @@ const io = require("socket.io")(server, {
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
 });
 const db = require("./db");
+const { clear } = require("console");
 let onlineUsers = {};
 
 app.use(compression());
@@ -45,7 +46,7 @@ app.post("/api/submit-user-name", (req, res) => {
     console.log(userName);
     db.insertUserName(userName)
         .then(({ rows }) => {
-            console.log(rows, rows[0].id);
+            //console.log(rows, rows[0].id);
             req.session.userId = rows[0].id;
             res.json({
                 success: true,
@@ -62,16 +63,20 @@ app.post("/api/submit-user-name", (req, res) => {
 });
 
 // app.get("/register", (req, res) => {
+
+// });
+
+// app.get("/challenge-others", (req, res) => {
 //     console.log("welcome in server");
 //     if (req.session.userId) {
-//         console.log("cookie", req.session.userId);
-//         res.redirect("/");
+//         console.log("cookie in challenge-others", req.session.userId);
+//         res.redirect("/challenge-others");
 //     } else {
-//         console.log("no cookie", req.session.userId);
+//         console.log("no cookie");
 //         //res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 //         res.redirect("/register");
 //     }
-// });
+//});
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
@@ -85,7 +90,7 @@ server.listen(process.env.PORT || 3001, function () {
 io.on("connection", (socket) => {
     console.log(`Socker with id ${socket.id} has connected`);
     const userId = socket.request.session.userId;
-    //const userId = socket.request.session.userId;
+
     if (!userId) {
         return socket.disconnect(true);
     }
@@ -96,16 +101,25 @@ io.on("connection", (socket) => {
 
     db.getOnlinePlayersByIds(arrOfIds)
         .then(({ rows }) => {
-            // console.log("getOnlineUsersByIds", rows);
+            console.log("getOnlineUsersByIds", rows);
+            // let currentUser = rows.find((u) => u.id === userId);
+            // let index = rows.indexOf(currentUser);
+            // rows.splice(index, 1);
             io.sockets.emit("online users", {
                 data: rows,
             });
         })
         .catch((err) => console.log("getOnlineUsersByIds", err));
 
+
+    socket.on("username", (input) => {
+        console.log("socket username", input);
+    });
+
     socket.on("challenge player", (id) => {
         console.log("id in socket server", id);
     });
+
     // socket.on("user disconnect", () => {
     //     delete onlineUsers[socket.id];
     // });

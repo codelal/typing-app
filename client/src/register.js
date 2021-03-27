@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { submitUserName } from "./actions";
+import { socket } from "./socket";
 
 export default function Register() {
     const dispatch = useDispatch();
@@ -13,8 +14,12 @@ export default function Register() {
     };
 
     const submitInput = () => {
-        if (input.length > 1) {
+        if (input.length > 0) {
             dispatch(submitUserName(input));
+            location.replace("/challenge-others");
+
+            socket.emit("challenge player", 2222);
+            socket.emit("username", input);
         } else {
             setError("You need a username to play");
         }

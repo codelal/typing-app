@@ -68,7 +68,7 @@ export default function TypingPractice() {
             <br />
             <button>
                 {" "}
-                <Link to="/challenge-others">Play with Others</Link>
+                <Link to="/register">Play with Others</Link>
             </button>
         </>
     );
