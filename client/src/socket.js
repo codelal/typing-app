@@ -8,9 +8,7 @@ export const init = (store) => {
         socket = io.connect();
     }
     socket.on("online users", (data) => {
-        // console.log("online users comes in", data);
+        //console.log("data in socket", data);
         store.dispatch(receiveOnlinersList(data));
     });
-
-    
 };

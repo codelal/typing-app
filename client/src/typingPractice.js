@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Textgenerator from "./textgenerator";
+import Textgenerator from "./Textgenerator";
 import {
     updateStatusColor,
     updateProgress,
@@ -9,8 +9,8 @@ import {
     receiveText,
     correctTyping,
 } from "./actions";
-import ProgressBar from "./progressBar";
-import Timer from "./timer";
+import ProgressBar from "./ProgressBar";
+import Timer from "./Timer";
 
 export default function TypingPractice() {
     const dispatch = useDispatch();

@@ -58,7 +58,6 @@ export function reducer(state = {}, action) {
         state = {
             ...state,
             userName: action.userName,
-            
         };
     }
 
@@ -66,6 +65,7 @@ export function reducer(state = {}, action) {
         state = {
             ...state,
             onlinePlayersList: action.onlinePlayersList,
+            
         };
     }
 

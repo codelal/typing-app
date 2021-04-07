@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { socket } from "./socket";
 
 export default function ChallengeOthers() {
+    const [currentPlayer, setCurrentPlayer] = useState();
     const onlinePlayersList = useSelector(
         (state) => state && state.onlinePlayersList
     );
-
-    console.log("onlinePlayersList", onlinePlayersList);
-
-    useEffect(() => {}, [onlinePlayersList]);
+    useEffect(() => {
+        socket.on("current player", (data) => {
+            // console.log("socket current Player comes in", data.currentPlayer);
+            setCurrentPlayer(data.currentPlayer);
+        });
+    }, []);
 
     const challengePlayer = (id) => {
         socket.emit("challenge player", id);
@@ -20,10 +23,14 @@ export default function ChallengeOthers() {
             {onlinePlayersList &&
                 onlinePlayersList.map((player) => (
                     <div className="online-player" key={player.id}>
-                        {player.username} wants to play
-                        <button onClick={challengePlayer(player.id)}>
-                            Challenge{" "}
-                        </button>
+                        {currentPlayer != player.id && (
+                            <>
+                                <p>{player.username} wants to play</p>
+                                <button onClick={challengePlayer(player.id)}>
+                                    Challenge{" "}
+                                </button>
+                            </>
+                        )}
                     </div>
                 ))}
         </div>

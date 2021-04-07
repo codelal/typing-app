@@ -69,8 +69,10 @@ export async function submitUserName(input) {
     let userName = {
         userName: input,
     };
+
     const { data } = await axios.post("/api/submit-user-name", userName);
     if (data.success == true) {
+        location.replace("/challenge-others");
         return {
             type: "USER NAME",
             userName: data.userName,
@@ -79,11 +81,9 @@ export async function submitUserName(input) {
 }
 
 export function receiveOnlinersList(data) {
-    console.log("onliners list in action", data.data);
-
     return {
         type: "RECEIVE_ONLINERS_LIST",
-        onlinePlayersList: data.data,
+        onlinePlayersList: data.onlinePlayersList,
     };
 }
 

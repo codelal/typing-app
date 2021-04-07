@@ -10,16 +10,9 @@ const io = require("socket.io")(server, {
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
 });
 const db = require("./db");
-const { clear } = require("console");
 let onlineUsers = {};
 
 app.use(compression());
-
-// app.use(
-//     express.urlencoded({
-//         extended: false,
-//     })
-// );
 
 app.use(express.json());
 
@@ -62,22 +55,6 @@ app.post("/api/submit-user-name", (req, res) => {
         });
 });
 
-// app.get("/register", (req, res) => {
-
-// });
-
-// app.get("/challenge-others", (req, res) => {
-//     console.log("welcome in server");
-//     if (req.session.userId) {
-//         console.log("cookie in challenge-others", req.session.userId);
-//         res.redirect("/challenge-others");
-//     } else {
-//         console.log("no cookie");
-//         //res.sendFile(path.join(__dirname, "..", "client", "index.html"));
-//         res.redirect("/register");
-//     }
-//});
-
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
@@ -90,34 +67,31 @@ server.listen(process.env.PORT || 3001, function () {
 io.on("connection", (socket) => {
     console.log(`Socker with id ${socket.id} has connected`);
     const userId = socket.request.session.userId;
+    //console.log("userId in socket", userId);
 
     if (!userId) {
         return socket.disconnect(true);
     }
 
     onlineUsers[socket.id] = userId;
+    //console.log("onlineUsers in socket", onlineUsers);
 
     let arrOfIds = [...new Set(Object.values(onlineUsers))];
 
     db.getOnlinePlayersByIds(arrOfIds)
         .then(({ rows }) => {
-            console.log("getOnlineUsersByIds", rows);
-            // let currentUser = rows.find((u) => u.id === userId);
-            // let index = rows.indexOf(currentUser);
-            // rows.splice(index, 1);
-            io.sockets.emit("online users", {
-                data: rows,
+            io.emit("online users", {
+                onlinePlayersList: rows,
+            });
+
+            socket.emit("current player", {
+                currentPlayer: userId,
             });
         })
         .catch((err) => console.log("getOnlineUsersByIds", err));
 
-
-    socket.on("username", (input) => {
-        console.log("socket username", input);
-    });
-
     socket.on("challenge player", (id) => {
-        console.log("id in socket server", id);
+        console.log("id in challenge player", id);
     });
 
     // socket.on("user disconnect", () => {

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route } from "react-router-dom";
-import Register from "./register";
-import TypingPractice from "./typingPractice";
-import ChallengeOthers from "./challengeOthers";
+import Register from "./Register";
+import TypingPractice from "./TypingPractice";
+import ChallengeOthers from "./ChallengeOthers";
 
 export default function App() {
     return (
