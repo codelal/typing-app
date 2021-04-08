@@ -81,9 +81,18 @@ export async function submitUserName(input) {
 }
 
 export function receiveOnlinersList(data) {
+    // console.log("receiveOnlinersList in action", data);
     return {
         type: "RECEIVE_ONLINERS_LIST",
         onlinePlayersList: data.onlinePlayersList,
+    };
+}
+
+export function updateOnlinePlayersList(id) {
+    //console.log("updateOnlinePlayersList(id) in action", id.userId);
+    return {
+        type: "UPDATE_ONLINERS_LIST",
+        removePlayer: id.userId,
     };
 }
 

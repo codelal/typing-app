@@ -70,13 +70,15 @@ io.on("connection", (socket) => {
     //console.log("userId in socket", userId);
 
     if (!userId) {
+        console.log("no id in socket");
         return socket.disconnect(true);
     }
 
     onlineUsers[socket.id] = userId;
-    //console.log("onlineUsers in socket", onlineUsers);
+    console.log("onlineUsers in socket", onlineUsers);
 
     let arrOfIds = [...new Set(Object.values(onlineUsers))];
+    console.log("arrOfIds BEFORE", arrOfIds);
 
     db.getOnlinePlayersByIds(arrOfIds)
         .then(({ rows }) => {
@@ -94,11 +96,13 @@ io.on("connection", (socket) => {
         console.log("id in challenge player", id);
     });
 
-    // socket.on("user disconnect", () => {
-    //     delete onlineUsers[socket.id];
-    // });
+    socket.on("disconnect", () => {
+        io.emit("update onliners", {
+            userId,
+        });
+        delete onlineUsers[socket.id];
+       
 
-    socket.on("Disconnect", () => {
         console.log(`Socker with id ${socket.id} has disconnected`);
     });
 });

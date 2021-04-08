@@ -8,6 +8,6 @@
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO statistic (username) VALUES ('player1');
-INSERT INTO statistic (username) VALUES ('player2');
-INSERT INTO statistic (username) VALUES ('player3');
+-- INSERT INTO statistic (username) VALUES ('player1');
+-- INSERT INTO statistic (username) VALUES ('player2');
+-- INSERT INTO statistic (username) VALUES ('player3');

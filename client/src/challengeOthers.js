@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { socket } from "./socket";
+import { updateOnlinePlayersList } from "./actions";
 
 export default function ChallengeOthers() {
+    const dispatch = useDispatch();
     const [currentPlayer, setCurrentPlayer] = useState();
     const onlinePlayersList = useSelector(
         (state) => state && state.onlinePlayersList
     );
+    socket.on("update onliners", (data) => {
+        console.log("id update onliners", data);
+        dispatch(updateOnlinePlayersList(data));
+    });
     useEffect(() => {
         socket.on("current player", (data) => {
             // console.log("socket current Player comes in", data.currentPlayer);
