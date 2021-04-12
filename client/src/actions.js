@@ -96,9 +96,12 @@ export function updateOnlinePlayersList(id) {
     };
 }
 
-// export async function challengePlayer(id) {
-//     const playerId = {
-//         playerId: id,
-//     };
-//     const { data } = await axios.post("api/challenge-player", playerId);
-// }
+export async function receiveChallengeStatus() {
+    console.log("challenge status");
+    const { data } = await axios.get("/api/challenge-status");
+    console.log("data challenge status in action", data);
+    return {
+        type: "CHALLENGE STATUS",
+        challengeStatus: "testText",
+    };
+}

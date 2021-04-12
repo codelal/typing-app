@@ -69,12 +69,17 @@ export function reducer(state = {}, action) {
     }
 
     if (action.type == "UPDATE_ONLINERS_LIST") {
-        
         state = {
             ...state,
             onlinePlayersList: state.onlinePlayersList.filter(
                 (onlinePlayer) => onlinePlayer.id !== action.removePlayer
             ),
+        };
+    }
+    if (action.type == "CHALLENGE STATUS") {
+        state = {
+            ...state,
+            challengeStatus: action.challengeStatus,
         };
     }
 

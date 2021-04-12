@@ -4,6 +4,7 @@ const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+const btn = require("./getButtonText");
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
     allowRequest: (req, callback) =>
@@ -55,6 +56,17 @@ app.post("/api/submit-user-name", (req, res) => {
         });
 });
 
+app.get("/api/challenge-status", (req, res) => {
+    db.getChallengeStatus(req.session.userId)
+        .then(({ rows }) => {
+            console.log("getChallengeStatus", rows);
+            res.json({
+                rows,
+            });
+        })
+        .catch((err) => console.log("error in getChallengeStatus", err));
+});
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
@@ -65,23 +77,24 @@ server.listen(process.env.PORT || 3001, function () {
 
 // socket.io
 io.on("connection", (socket) => {
-    console.log(`Socker with id ${socket.id} has connected`);
+    // console.log(`Socker with id ${socket.id} has connected`);
     const userId = socket.request.session.userId;
     //console.log("userId in socket", userId);
 
     if (!userId) {
-        console.log("no id in socket");
+        //  console.log("no id in socket");
         return socket.disconnect(true);
     }
 
     onlineUsers[socket.id] = userId;
-    console.log("onlineUsers in socket", onlineUsers);
+    // console.log("onlineUsers in socket", onlineUsers);
 
     let arrOfIds = [...new Set(Object.values(onlineUsers))];
-    console.log("arrOfIds BEFORE", arrOfIds);
+    //console.log("arrOfIds BEFORE", arrOfIds);
 
     db.getOnlinePlayersByIds(arrOfIds)
         .then(({ rows }) => {
+            //console.log("getOnlinePlayersByIds", rows);
             io.emit("online users", {
                 onlinePlayersList: rows,
             });
@@ -92,16 +105,34 @@ io.on("connection", (socket) => {
         })
         .catch((err) => console.log("getOnlineUsersByIds", err));
 
-    socket.on("challenge player", (id) => {
-        console.log("id in challenge player", id);
+    socket.on("challenge player", (IdChallengedPlayer) => {
+        // console.log("id of challenged player", IdChallengedPlayer);
+        db.insertChallengeRequest(userId, IdChallengedPlayer)
+            .then(() => {
+                const socketIdChallengedPlayer = Object.keys(
+                    onlineUsers
+                ).filter((key) => {
+                    return onlineUsers[key] === IdChallengedPlayer;
+                });
+                for (let i = 0; i < socketIdChallengedPlayer.length; i++) {
+                    io.to(socketIdChallengedPlayer[i]).emit(
+                        "challenge request",
+                        userId
+                    );
+                }
+            })
+            .catch((err) => {
+                console.log("insertChallengeRequest", err);
+            });
     });
 
     socket.on("disconnect", () => {
+        delete onlineUsers[socket.id];
+        // const index = arrOfIds.indexOf(socket.request.userId);
+        // arrOfIds.splice(index, 1);
         io.emit("update onliners", {
             userId,
         });
-        delete onlineUsers[socket.id];
-       
 
         console.log(`Socker with id ${socket.id} has disconnected`);
     });
