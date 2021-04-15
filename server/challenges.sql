@@ -8,6 +8,6 @@ CREATE TABLE challenges(
 );
 
 
-INSERT INTO challenges(sender_id, recipient_id, accepted ) VALUES (1, 2, false);
-INSERT INTO challenges(sender_id, recipient_id, accepted ) VALUES (2, 3, false);
-INSERT INTO challenges(sender_id, recipient_id, accepted ) VALUES (1, 4, true);
+-- INSERT INTO challenges(sender_id, recipient_id, accepted ) VALUES (1, 2, false);
+-- INSERT INTO challenges(sender_id, recipient_id, accepted ) VALUES (2, 3, false);
+-- INSERT INTO challenges(sender_id, recipient_id, accepted ) VALUES (1, 4, true);

@@ -1,14 +1,26 @@
 import io from "socket.io-client";
 export let socket;
-import { receiveOnlinersList } from "./actions";
+import {
+    receiveOnlinersNoChallenge,
+    receiveOnlinersWithChallenge,
+    updateButton,
+} from "./actions";
 
 export const init = (store) => {
-    //make sure 1user has one socket independly fron the number f open tabs
     if (!socket) {
         socket = io.connect();
     }
-    socket.on("online users", (data) => {
-        //console.log("data in socket", data);
-        store.dispatch(receiveOnlinersList(data));
+    socket.on("onliners challenge status", (data) => {
+        //console.log(" onliners challenge status socket.js", data);
+        store.dispatch(receiveOnlinersWithChallenge(data));
+    });
+    socket.on("onliners no challenge", (data) => {
+        //console.log("onliners no challenge socket.js", data);
+        store.dispatch(receiveOnlinersNoChallenge(data));
+    });
+
+    socket.on("update Button", (data) => {
+        //console.log("update Button in socket.js", data);
+        store.dispatch(updateButton(data));
     });
 };

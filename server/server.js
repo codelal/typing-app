@@ -56,17 +56,6 @@ app.post("/api/submit-user-name", (req, res) => {
         });
 });
 
-app.get("/api/challenge-status", (req, res) => {
-    db.getChallengeStatus(req.session.userId)
-        .then(({ rows }) => {
-            console.log("getChallengeStatus", rows);
-            res.json({
-                rows,
-            });
-        })
-        .catch((err) => console.log("error in getChallengeStatus", err));
-});
-
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
@@ -87,44 +76,79 @@ io.on("connection", (socket) => {
     }
 
     onlineUsers[socket.id] = userId;
-    // console.log("onlineUsers in socket", onlineUsers);
+    //console.log("onlineUsers in socket", onlineUsers);
 
-    let arrOfIds = [...new Set(Object.values(onlineUsers))];
-    //console.log("arrOfIds BEFORE", arrOfIds);
+    let arrUniqueOnliners = [...new Set(Object.values(onlineUsers))];
+    //console.log("arrOfIds BEFORE", arrUniqueOnliners);
 
-    db.getOnlinePlayersByIds(arrOfIds)
+    socket.on("button click", (data) => {
+        // console.log(data.otherPlayerId);
+        let button = {
+            otherUserId: data.otherPlayerId,
+        };
+        if (data.buttonText === btn.BUTTON_TEXT.MAKE_CHALLENGE) {
+            db.makeChallenge(userId, data.otherPlayerId)
+                .then(() => {
+                    button.buttonText = btn.BUTTON_TEXT.CANCEL_CHALLENGE;
+                    arrUniqueOnliners = arrUniqueOnliners.filter(
+                        (id) => id !== data.otherPlayerId
+                    );
+
+                    socket.emit("update Button", button);
+                })
+                .catch((err) => {
+                    console.log("error in insertChallengeRequest", err);
+                });
+        } else if (data.buttonText === btn.BUTTON_TEXT.ACCEPT_CHALLENGE) {
+            db.acceptChallenge()
+                .then(({ rows }) => {
+                    console.log(rows);
+                })
+                .catch((err) => {
+                    console.log("error in acceptChallenge", err);
+                });
+        } else if (data.buttonText === btn.BUTTON_TEXT.CANCEL_CHALLENGE) {
+            db.cancelChallenge(userId, data.otherPlayerId)
+                .then(() => {
+                    button.buttonText = btn.BUTTON_TEXT.MAKE_CHALLENGE;
+                    socket.emit("update Button", button);
+                })
+                .catch((err) => {
+                    console.log("error in cancelChallenge", err);
+                });
+        }
+    });
+
+    db.getChallengeStatus(userId)
         .then(({ rows }) => {
-            //console.log("getOnlinePlayersByIds", rows);
-            io.emit("online users", {
-                onlinePlayersList: rows,
-            });
-
+            //   console.log("getChallengeStatus", rows);
             socket.emit("current player", {
                 currentPlayer: userId,
             });
-        })
-        .catch((err) => console.log("getOnlineUsersByIds", err));
-
-    socket.on("challenge player", (IdChallengedPlayer) => {
-        // console.log("id of challenged player", IdChallengedPlayer);
-        db.insertChallengeRequest(userId, IdChallengedPlayer)
-            .then(() => {
-                const socketIdChallengedPlayer = Object.keys(
-                    onlineUsers
-                ).filter((key) => {
-                    return onlineUsers[key] === IdChallengedPlayer;
-                });
-                for (let i = 0; i < socketIdChallengedPlayer.length; i++) {
-                    io.to(socketIdChallengedPlayer[i]).emit(
-                        "challenge request",
-                        userId
-                    );
-                }
-            })
-            .catch((err) => {
-                console.log("insertChallengeRequest", err);
+            io.emit("onliners challenge status", {
+                onlinersWithChallenge: rows,
             });
-    });
+
+            let arrOfIdsChallengeStatus = rows.map(
+                (row) => row.recipient_id && row.sender_id
+            );
+
+            let arrOfIdsNoChallenge = arrUniqueOnliners.filter(
+                (id) => !arrOfIdsChallengeStatus.includes(id)
+            );
+            console.log("arrOfIdsNoChallenge", arrOfIdsNoChallenge);
+
+            db.getOnlinePlayersByIds(arrOfIdsNoChallenge)
+                .then(({ rows }) => {
+                    // console.log("getOnlinePlayersByIds", rows);
+                    io.emit("onliners no challenge", {
+                        onlinersNoChallenge: rows,
+                        currentPlayer: userId,
+                    });
+                })
+                .catch((err) => console.log("getOnlineUsersByIds", err));
+        })
+        .catch((err) => console.log("error in getChallengeStatus", err));
 
     socket.on("disconnect", () => {
         delete onlineUsers[socket.id];
@@ -137,3 +161,33 @@ io.on("connection", (socket) => {
         console.log(`Socker with id ${socket.id} has disconnected`);
     });
 });
+
+// db.makeChallenge(userId, IdChallengedPlayer)
+//     .then(() => {
+//         const socketIdChallengedPlayer = Object.keys(
+//             onlineUsers
+//         ).filter((key) => {
+//             return onlineUsers[key] === IdChallengedPlayer;
+//         });
+//         for (let i = 0; i < socketIdChallengedPlayer.length; i++) {
+//             io.to(socketIdChallengedPlayer[i]).emit(
+//                 "challenge request",
+//                 userId
+//             );
+//         }
+//     })
+//     .catch((err) => {
+//         console.log("insertChallengeRequest", err);
+//     });
+
+// const socketIdChallengedPlayer = Object.keys(
+//     onlineUsers
+// ).filter((key) => {
+//     return onlineUsers[key] === IdChallengedPlayer;
+// });
+// for (let i = 0; i < socketIdChallengedPlayer.length; i++) {
+//     io.to(socketIdChallengedPlayer[i]).emit(
+//         "challenge request",
+//         userId
+//     );
+// }

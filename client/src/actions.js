@@ -1,4 +1,5 @@
 import axios from "./axios";
+import { BUTTON_TEXT } from "./ChallengeOthers";
 
 export async function receiveText() {
     const { data } = await axios.get(
@@ -80,28 +81,37 @@ export async function submitUserName(input) {
     }
 }
 
-export function receiveOnlinersList(data) {
-    // console.log("receiveOnlinersList in action", data);
+export function receiveOnlinersNoChallenge(data) {
+    //console.log("receiveOnlinersNoStatus in action", data);
     return {
-        type: "RECEIVE_ONLINERS_LIST",
-        onlinePlayersList: data.onlinePlayersList,
+        type: "RECEIVE_ONLINERS_NO_CHALLENGE",
+        onlinersNoChallenge: data.onlinersNoChallenge,
     };
 }
 
-export function updateOnlinePlayersList(id) {
-    //console.log("updateOnlinePlayersList(id) in action", id.userId);
+export function receiveOnlinersWithChallenge(data) {
+    //console.log("receiveOnlinersWithStatus in action", data);
     return {
-        type: "UPDATE_ONLINERS_LIST",
-        removePlayer: id.userId,
+        type: "RECEIVE_ONLINERS_WITH_CHALLENGE",
+        onlinersWithChallenge: data.onlinersWithChallenge,
     };
 }
 
-export async function receiveChallengeStatus() {
-    console.log("challenge status");
-    const { data } = await axios.get("/api/challenge-status");
-    console.log("data challenge status in action", data);
-    return {
-        type: "CHALLENGE STATUS",
-        challengeStatus: "testText",
-    };
+export function updateButton(data) {
+    console.log("updateButton in action", data);
+
+    if (data.buttonText == BUTTON_TEXT.CANCEL_CHALLENGE) {
+        return {
+            type: "ACCEPT_CHALLENGE",
+            otherUserId: data.otherUserId,
+        };
+    }
+
+    if (data.buttonText == BUTTON_TEXT.MAKE_CHALLENGE) {
+        return {
+            type: "CANCEL_CHALLENGE",
+            otherUserId: data.otherUserId,
+        };
+    }
 }
+
