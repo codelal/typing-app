@@ -16,7 +16,6 @@ export default function TypingPractice() {
     const dispatch = useDispatch();
     const generatedText = useSelector((state) => state && state.generatedText);
     const progressValue = useSelector((state) => state && state.progressValue);
-    //console.log("progressValue", progressValue);
 
     useEffect(() => {}, [progressValue]);
 
@@ -29,20 +28,17 @@ export default function TypingPractice() {
             dispatch(timerStatus("stop"));
         } else {
             dispatch(timerStatus("runs"));
-            //console.log("timer is running", index, generatedText.length);
         }
 
         if (event.key === generatedText[index].letter) {
             dispatch(updateStatusColor(index, "correct-typing"));
             dispatch(correctTyping());
-            //console.log("index in key", index);
         } else {
             dispatch(updateStatusColor(index, "incorrect-typing"));
         }
     };
 
     const restart = () => {
-        console.log("restart");
         dispatch(receiveText());
         document.getElementById("input").value = "";
         dispatch(timerStatus("clear"));
@@ -50,7 +46,6 @@ export default function TypingPractice() {
 
     return (
         <>
-            <h3>typing - practice:</h3>
             <Textgenerator />
             {<Timer />}
             {progressValue && (

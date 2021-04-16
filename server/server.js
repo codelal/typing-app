@@ -64,6 +64,9 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
+
+
+/////////////////Part II in progress/////////////////////////
 // socket.io
 io.on("connection", (socket) => {
     // console.log(`Socker with id ${socket.id} has connected`);

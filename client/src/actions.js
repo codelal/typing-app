@@ -98,7 +98,7 @@ export function receiveOnlinersWithChallenge(data) {
 }
 
 export function updateButton(data) {
-    console.log("updateButton in action", data);
+    //console.log("updateButton in action", data);
 
     if (data.buttonText == BUTTON_TEXT.CANCEL_CHALLENGE) {
         return {

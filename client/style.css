@@ -1,9 +1,14 @@
 body {
-    background-color: rgb(206, 233, 247);
+    background-color: #bfdccf;
     text-align: center;
 }
 
+h2 {
+    color: white;
+}
+
 .text-container {
+    border: 0.1rem solid black;
     display: flex;
     flex-direction: row;
 }
@@ -16,7 +21,7 @@ body {
 }
 
 input {
-    width: 60%;
+    visibility: hidden;
 }
 
 .typing {
@@ -26,18 +31,20 @@ input {
 }
 
 .correct-typing {
-    color: green;
+    color: #d5c9b1;
 }
 
 .incorrect-typing {
-    color: red;
+    color: #e05858;
 }
 
 button {
     margin: 2rem;
+    background-color: #d5c9b1;
 }
 
 /*progress-bar*/
+
 .progress-bar {
     margin: 1rem;
     width: 95%;
@@ -48,7 +55,7 @@ button {
 }
 
 .loading-progress {
-    background-color: rgb(100, 149, 237);
+    background-color: #5f968e;
     min-width: 3%;
     height: 20px;
     border-radius: 50px;
@@ -64,13 +71,16 @@ button {
 
 .error {
     width: 100%;
-    background-color: red;
+    background-color: #e05858;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50px;
 }
 
+/*progress-bar*/
+
+/* ---- part 2 in progress ---- */
 .register {
     background-color: rgb(100, 149, 237);
     position: absolute;

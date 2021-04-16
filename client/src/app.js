@@ -7,7 +7,7 @@ export default function App() {
     return (
         <BrowserRouter>
             <div className="app">
-                <h1>App</h1>
+                <h2>My Typing Practice</h2>
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/" component={TypingPractice} />
                 <Route path="/challenge-others" component={ChallengeOthers} />
