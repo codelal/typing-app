@@ -13,7 +13,7 @@ export default function Textgenerator() {
     return (
         <>
             {" "}
-            <div>
+            <div className="generated-text">
                 {generatedText &&
                     generatedText.map((singleLetter, index) => (
                         <span className={singleLetter.typingStatus} key={index}>

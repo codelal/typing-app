@@ -1,70 +1,90 @@
 body {
     background-color: #bfdccf;
     text-align: center;
-}
-
-h2 {
+    font-family: "Nunito", sans-serif;
     color: white;
 }
 
-.text-container {
-    border: 0.1rem solid black;
-    display: flex;
-    flex-direction: row;
+h2 {
+    margin-top: 5rem;
+    font-size: 2.5rem;
+    text-shadow: 0.5px 0.5px 0.5px #2d4743;
+}
+
+.container {
+    display: grid;
+    justify-items: center;
 }
 
 .generated-text {
-    border: 0.1rem solid black;
-    text-align: justify;
-    width: 60%;
-    height: auto;
+    border: 0.2rem solid white;
+    border-radius: 10px;
+    margin: 1rem;
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    letter-spacing: 1.2px;
+    text-align: center;
+    width: 80%;
+    background-color: #d5c9b1;
 }
 
-input {
-    visibility: hidden;
-}
-
-.typing {
-    width: 60%;
-    height: 5rem;
+.timer {
     border: 0.1rem solid black;
+    margin-bottom: 1rem;
 }
 
 .correct-typing {
-    color: #d5c9b1;
+    background-color: #5f968e;
+    border-radius: 2px;
 }
 
 .incorrect-typing {
-    color: #e05858;
+    background-color: #e05858;
+    border-radius: 10px;
+}
+
+input {
+    border: 0.2rem solid white;
+    border-radius: 50px;
+    width: 60%;
+    height: 25px;
+    margin: 1rem;
+    font-size: 1.2rem;
+    color: white;
+    letter-spacing: 1.2px;
+    background-color: #bfdccf;
+    /* background-color: #d5c9b1; */
 }
 
 button {
     margin: 2rem;
     background-color: #d5c9b1;
+    /* background-color: #bfdccf; */
+    border: 0.2rem solid white;
 }
 
 /*progress-bar*/
 
 .progress-bar {
     margin: 1rem;
-    width: 95%;
-    height: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(100, 149, 237, 0.3);
+    width: 60%;
+    height: 25px;
+    border: 0.2rem solid white;
+    /* background-color: white; */
     border-radius: 50px;
 }
 
 .loading-progress {
     background-color: #5f968e;
     min-width: 3%;
-    height: 20px;
+    height: 25px;
     border-radius: 50px;
     color: white;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    font-family: sans-serif;
-    font-size: 11px;
+    font-size: 1rem;
     padding-right: 0.5rem;
     padding-left: 1rem;
 }
@@ -81,8 +101,9 @@ button {
 /*progress-bar*/
 
 /* ---- part 2 in progress ---- */
+
 .register {
-    background-color: rgb(100, 149, 237);
+    background-color: #5f968e;
     position: absolute;
     height: 10rem;
     width: 20rem;

@@ -21,5 +21,5 @@ export default function Timer() {
         dispatch(setTotalSeconds(time / 1000));
     }, [timerStatus]);
 
-    return <>{time / 1000} Seconds</>;
+    return <div className="timer">{time / 1000} Seconds</div>;
 }

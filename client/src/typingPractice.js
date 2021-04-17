@@ -45,9 +45,7 @@ export default function TypingPractice() {
     };
 
     return (
-        <>
-            <Textgenerator />
-            {<Timer />}
+        <div className="container">
             {progressValue && (
                 <>
                     <ProgressBar
@@ -57,6 +55,7 @@ export default function TypingPractice() {
                     />
                 </>
             )}
+            <Textgenerator />
             <input id="input" onKeyDown={handleKeyDown}></input>
             <br />
             <button onClick={restart}>Restart</button>
@@ -65,6 +64,7 @@ export default function TypingPractice() {
                 {" "}
                 <Link to="/register">Play with Others</Link>
             </button>
-        </>
+            {<Timer />}
+        </div>
     );
 }
