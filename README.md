@@ -1,6 +1,6 @@
 # Typing practice
 
-![screenshot typing-app part1](public/typingApp.png)
+![screenshot typing-app part1](client/public/typingApp.png)
 
 Part 1: A little app to practice fast typing with dinonames and a progressbar that shows the time.
 
