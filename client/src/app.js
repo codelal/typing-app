@@ -1,4 +1,5 @@
 import { BrowserRouter, Route } from "react-router-dom";
+
 import Register from "./Register";
 import TypingPractice from "./TypingPractice";
 import ChallengeOthers from "./ChallengeOthers";

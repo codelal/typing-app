@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
+import Timer from "./Timer";
 
 export default function ProgressBar({ value, maxValue, minValue }) {
     const [error, setError] = useState(false);
     const [progress, setProgress] = useState(0);
-    //console.log("inpg", value, maxValue, minValue);
 
     useEffect(() => {
         if (value >= minValue && value <= maxValue) {
@@ -22,7 +22,7 @@ export default function ProgressBar({ value, maxValue, minValue }) {
                         className="loading-progress"
                         style={{ width: progress + "%" }}
                     >
-                        {Math.round(progress)}%
+                        <Timer />
                     </div>
                 )}
                 {error && <div className="error">⚠️</div>}
@@ -30,3 +30,5 @@ export default function ProgressBar({ value, maxValue, minValue }) {
         </>
     );
 }
+
+// {Math.round(progress)}%

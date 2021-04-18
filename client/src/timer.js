@@ -9,8 +9,9 @@ export default function Timer() {
 
     useEffect(() => {
         let intervalId = 0;
-        //change later: start timer with 1
+
         if (timerStatus == "runs") {
+            setTime(1000);
             intervalId = setInterval(() => {
                 setTime((prevTime) => prevTime + 1000);
             }, 1000);
@@ -21,5 +22,5 @@ export default function Timer() {
         dispatch(setTotalSeconds(time / 1000));
     }, [timerStatus]);
 
-    return <div className="timer">{time / 1000} Seconds</div>;
+    return <p className="timer">{time/1000}Sec</p>;
 }

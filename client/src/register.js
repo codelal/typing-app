@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { submitUserName } from "./actions";
-import { socket } from "./socket";
 
 export default function Register() {
     const dispatch = useDispatch();

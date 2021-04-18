@@ -3,10 +3,8 @@ import { BUTTON_TEXT } from "./ChallengeOthers";
 
 export async function receiveText() {
     const { data } = await axios.get(
-        "http://dinoipsum.herokuapp.com/api/?format=json&words=10&paragraphs=3"
+        "http://dinoipsum.herokuapp.com/api/?format=json&words=5&paragraphs=1"
     );
-
-    // console.log("data generated text in actions", data[0]);
     let arrayToString = data[0].join(" ");
     let arrayOfLetterObjects = [];
 

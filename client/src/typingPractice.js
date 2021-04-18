@@ -10,7 +10,7 @@ import {
     correctTyping,
 } from "./actions";
 import ProgressBar from "./ProgressBar";
-import Timer from "./Timer";
+
 
 export default function TypingPractice() {
     const dispatch = useDispatch();
@@ -46,6 +46,7 @@ export default function TypingPractice() {
 
     return (
         <div className="container">
+            <Link to="/register">Click here to play with Others</Link>
             {progressValue && (
                 <>
                     <ProgressBar
@@ -60,11 +61,6 @@ export default function TypingPractice() {
             <br />
             <button onClick={restart}>Restart</button>
             <br />
-            <button>
-                {" "}
-                <Link to="/register">Play with Others</Link>
-            </button>
-            {<Timer />}
         </div>
     );
 }
