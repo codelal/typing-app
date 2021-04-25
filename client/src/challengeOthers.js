@@ -11,12 +11,16 @@ export const BUTTON_TEXT = {
 export default function ChallengeOthers() {
     const [currentPlayerId, setCurrentPlayerId] = useState();
     const noPendingChallenge = useSelector(
-        (state) => state && state.onlinersNoChallenge
+        (state) =>
+            state.onliners &&
+            state.onliners.filter((status) => status.accepted === undefined)
     );
+    console.log("noPendingChallenge", noPendingChallenge);
+
     const challengedPlayers = useSelector(
         (state) =>
-            state.onlinersWithChallenge &&
-            state.onlinersWithChallenge.filter(
+            state.onliners &&
+            state.onliners.filter(
                 (status) =>
                     status.accepted === false &&
                     status.sender_id === currentPlayerId
@@ -25,10 +29,8 @@ export default function ChallengeOthers() {
 
     const challengingPlayers = useSelector(
         (state) =>
-            state.onlinersWithChallenge &&
-            state.onlinersWithChallenge.filter(
-                (status) => status.accepted === true
-            )
+            state.onliners &&
+            state.onliners.filter((status) => status.accepted === true)
     );
 
     useEffect(() => {
@@ -115,11 +117,11 @@ export default function ChallengeOthers() {
     );
 
     return (
-        <>
+        <div className="onliners-container">
             <h1>Challenge Others</h1>
             {noChallenge}
             {challengers}
             {challenged}
-        </>
+        </div>
     );
 }

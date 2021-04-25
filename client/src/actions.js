@@ -5,7 +5,7 @@ export async function receiveText() {
     const { data } = await axios.get(
         "http://dinoipsum.herokuapp.com/api/?format=json&words=5&paragraphs=1"
     );
-    console.log(data[0]); //array of words
+    //console.log(data[0]); //array of words
     let arrayToString = data[0].join(" ");
     //to string
     let arrayOfLetterObjects = [];
@@ -87,24 +87,16 @@ export async function submitUserName(input) {
     }
 }
 
-export function receiveOnlinersNoChallenge(data) {
-    //console.log("receiveOnlinersNoStatus in action", data);
+export function receiveOnliners(data) {
+    console.log("receiveOnliners in action", data);
     return {
-        type: "RECEIVE_ONLINERS_NO_CHALLENGE",
-        onlinersNoChallenge: data.onlinersNoChallenge,
-    };
-}
-
-export function receiveOnlinersWithChallenge(data) {
-    //console.log("receiveOnlinersWithStatus in action", data);
-    return {
-        type: "RECEIVE_ONLINERS_WITH_CHALLENGE",
-        onlinersWithChallenge: data.onlinersWithChallenge,
+        type: "RECEIVE_ONLINERS",
+        onliners: data.onliners,
     };
 }
 
 export function updateButton(data) {
-    //console.log("updateButton in action", data);
+    console.log("updateButton in action", data);
 
     if (data.buttonText == BUTTON_TEXT.CANCEL_CHALLENGE) {
         return {

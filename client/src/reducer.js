@@ -61,46 +61,38 @@ export function reducer(state = {}, action) {
         };
     }
 
-    if (action.type == "RECEIVE_ONLINERS_NO_CHALLENGE") {
+    if (action.type == "RECEIVE_ONLINERS") {
         state = {
             ...state,
-            onlinersNoChallenge: action.onlinersNoChallenge,
+            onliners: action.onliners,
         };
     }
 
-    if (action.type == "RECEIVE_ONLINERS_WITH_CHALLENGE") {
-        state = {
-            ...state,
-            onlinersWithChallenge: action.onlinersWithChallenge,
-        };
-    }
-
+  
     if (action.type == "ACCEPT_CHALLENGE") {
         state = {
             ...state,
-            onlinersWithChallenge: state.onlinersWithChallenge.map(
-                (onliner) => {
-                    if (onliner.id == action.otherUserId) {
-                        return {
-                            ...onliner,
-                            accepted: true,
-                        };
-                    } else {
-                        return onliner;
-                    }
+            onliners: state.onliners.map((onliner) => {
+                if (onliner.id == action.otherUserId) {
+                    return {
+                        ...onliner,
+                        accepted: true,
+                    };
+                } else {
+                    return onliner;
                 }
-            ),
+            }),
         };
     }
 
-    if (action.type == "CANCEL_CHALLENGE") {
-        state = {
-            ...state,
-            friendsList: state.friendsList.filter(
-                (friend) => friend.id !== action.otherUserId
-            ),
-        };
-    }
+    // if (action.type == "CANCEL_CHALLENGE") {
+    //     state = {
+    //         ...state,
+    //         onliners: state.onliners.filter(
+    //             (friend) => friend.id !== action.otherUserId
+    //         ),
+    //     };
+    // }
 
     return state;
 }

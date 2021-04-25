@@ -165,16 +165,19 @@ a {
     letter-spacing: 1.2px;
     text-align: center;
     width: auto;
-    height: 25rem;
+    height: 23rem;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
 }
 
 .btn-register {
-    margin: 2rem;
+    margin-top: 2rem;
 }
 
 .input-register:focus {
     outline: 0;
     color: white;
+    text-align: center;
 }
 
 .error {
@@ -187,3 +190,7 @@ a {
     padding-left: 90%;
     border: 0.2rem solid black;
 } */
+
+h1 {
+    height:2rem;
+}

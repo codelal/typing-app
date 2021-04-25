@@ -21,7 +21,7 @@ module.exports.getOnlinePlayersByIds = (arrayOfIds) => {
 module.exports.makeChallenge = (userId, otherUserId) => {
     return db.query(
         `INSERT INTO challenges (sender_id, recipient_id) VALUES($1, $2)`,
-        [userId, otherUserId]
+        [userId, otherUserId,]
     );
 };
 
@@ -41,7 +41,7 @@ module.exports.cancelChallenge = (userId, otherUserId) => {
 
 module.exports.getChallengeStatus = (userId) => {
     return db.query(
-        `SELECT statistic.id, statistic.username, accepted, recipient_id, sender_id
+        `SELECT challenges.id AS "challenges_id", statistic.id, statistic.username, accepted, recipient_id, sender_id
   FROM challenges
   JOIN statistic
   ON (accepted = false AND recipient_id = $1 AND sender_id = statistic.id) 
