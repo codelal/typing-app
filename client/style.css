@@ -5,16 +5,35 @@ body {
     color: white;
 }
 
+.app {
+    display: grid;
+    grid-template-areas:
+        "head"
+        "main"
+        "footer";
+    grid-template-rows: 20% 70% 10%;
+    justify-items: center;
+    border: 0.2rem solid white;
+    height: 100vh;
+    width: auto;
+}
+
 h2 {
-    margin-top: 5rem;
-    margin-bottom: 1rem;
+    grid-area: head;
+    align-self: center;
+    justify-self: center;
     font-size: 2.5rem;
     text-shadow: 0px 10px 28px rgba(85, 92, 77, 0.3);
+    /* border: 0.2rem solid rgb(163, 61, 61); */
 }
 
 .container {
+    grid-area: main;
     display: grid;
     justify-items: center;
+    border: 0.2rem solid rgb(163, 61, 61);
+    width: 90vw;
+    height: 80vh;
 }
 
 .generated-text {
@@ -64,7 +83,7 @@ input {
     text-align: center;
 }
 
-input:focus {
+#input:focus {
     outline: 0;
     border: 0.2rem solid #5f968e;
 }
@@ -94,7 +113,7 @@ button:focus {
 a {
     color: #5f968e;
     font-family: "Nunito", sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     margin-bottom: 1rem;
     text-shadow: 0 14px 28px rgba(85, 92, 77, 0.3);
 }
@@ -122,7 +141,7 @@ a {
     font-size: 1em;
 }
 
-.error {
+.error-progress-bar {
     width: 100%;
     background-color: #e05858;
     display: flex;
@@ -136,16 +155,35 @@ a {
 /* ---- part 2 in progress ---- */
 
 .register {
+    grid-area: main;
     background-color: #5f968e;
-    position: absolute;
-    height: 10rem;
-    width: 20rem;
-    margin-top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
+    border: 0.2rem solid white;
+    border-radius: 10px;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    letter-spacing: 1.2px;
+    text-align: center;
+    width: auto;
+    height: 25rem;
 }
 
-.close-x {
+.btn-register {
+    margin: 2rem;
+}
+
+.input-register:focus {
+    outline: 0;
+    color: white;
+}
+
+.error {
+    background-color: #e05858;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+/* .close-x {
     padding-left: 90%;
     border: 0.2rem solid black;
-}
+} */

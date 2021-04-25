@@ -25,7 +25,7 @@ export default function ProgressBar({ value, maxValue, minValue }) {
                         <Timer />
                     </div>
                 )}
-                {error && <div className="error">⚠️</div>}
+                {error && <div className="error-progress-bar">⚠️</div>}
             </div>
         </>
     );

@@ -11,7 +11,6 @@ import {
 } from "./actions";
 import ProgressBar from "./ProgressBar";
 
-
 export default function TypingPractice() {
     const dispatch = useDispatch();
     const generatedText = useSelector((state) => state && state.generatedText);

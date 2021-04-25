@@ -5,14 +5,22 @@ export async function receiveText() {
     const { data } = await axios.get(
         "http://dinoipsum.herokuapp.com/api/?format=json&words=5&paragraphs=1"
     );
+    console.log(data[0]); //array of words
     let arrayToString = data[0].join(" ");
+    //to string
     let arrayOfLetterObjects = [];
+
+    //um einen array mit Objekten mit einzelnen Buchstaben zu machen
 
     for (let i = 0; i < arrayToString.length; i++) {
         let objectOfLetters = {
             letter: arrayToString.charAt(i),
         };
+
+        //console.log("letter", objectOfLetters.letter);
+        //Object, da typing-status später als key-value
         arrayOfLetterObjects.push(objectOfLetters);
+        //console.log(arrayOfLetterObjects);
     }
 
     return {
@@ -112,4 +120,3 @@ export function updateButton(data) {
         };
     }
 }
-

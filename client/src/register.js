@@ -22,11 +22,13 @@ export default function Register() {
 
     return (
         <div className="register">
-            <h3>register</h3>
-            {error && <p>{error}</p>}
+            <h3>Register</h3>
+            {error && <p className="error">{error}</p>}
             {<p>Please enter you name</p>}
-            <input onChange={handleInput}></input>
-            <button onClick={submitInput}>Submit</button>
+            <input className="input-register" onChange={handleInput}></input>
+            <button className="btn-register" onClick={submitInput}>
+                Submit
+            </button>
         </div>
     );
 }
