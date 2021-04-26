@@ -1,8 +1,8 @@
 import { BrowserRouter, Route } from "react-router-dom";
-
 import Register from "./Register";
 import TypingPractice from "./TypingPractice";
-import ChallengeOthers from "./ChallengeOthers";
+import Onliners from "./Onliners";
+import PlayDuel from "./PlayDuel";
 
 export default function App() {
     return (
@@ -11,7 +11,8 @@ export default function App() {
                 <h2>My Typing Practice</h2>
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/" component={TypingPractice} />
-                <Route path="/challenge-others" component={ChallengeOthers} />
+                <Route path="/onliners" component={Onliners} />
+                <Route path="/play-duel-secret-link" component={PlayDuel} />
             </div>
         </BrowserRouter>
     );

@@ -77,26 +77,32 @@ io.on("connection", (socket) => {
     }
 
     onlineUsers[socket.id] = userId;
-    //console.log("onlineUsers in socket", onlineUsers);
+    console.log("onlineUsers in socket", onlineUsers);
 
+    // Onliners without Challenge status
     let arrUniqueOnliners = [...new Set(Object.values(onlineUsers))];
     //console.log("arrOfIds BEFORE", arrUniqueOnliners);
 
     socket.on("button click", (data) => {
         console.log("button click comes in", data);
         let button = {
-            otherUserId: data.otherPlayerId,
+            otherUserId: data.otherUserId,
+            currentUserId: userId,
         };
+
+        const socketIdOtherPlayer = Object.keys(onlineUsers).filter((key) => {
+            return onlineUsers[key] === data.otherUserId;
+        });
+
+        console.log("socketIdOtherPlayer", socketIdOtherPlayer[0]);
+
         if (data.buttonText === btn.BUTTON_TEXT.MAKE_CHALLENGE) {
             console.log("button text is", data.buttonText);
-            db.makeChallenge(userId, data.otherPlayerId)
+            db.makeChallenge(userId, data.otherUserId)
                 .then(() => {
                     button.buttonText = btn.BUTTON_TEXT.CANCEL_CHALLENGE;
-                    arrUniqueOnliners = arrUniqueOnliners.filter(
-                        (id) => id !== data.otherPlayerId
-                    );
-
                     socket.emit("update Button", button);
+                    io.to(socketIdOtherPlayer[0]).emit("get challenge", userId);
                 })
                 .catch((err) => {
                     console.log("error in insertChallengeRequest", err);
@@ -105,14 +111,21 @@ io.on("connection", (socket) => {
             console.log("button text is", data.buttonText);
             db.acceptChallenge()
                 .then(({ rows }) => {
-                    console.log(rows);
+                    console.log("update in accept Challenge is done", rows);
+                    //generate secret link
+                    socket.emit("play duel");
+                    console.log(socketIdOtherPlayer[0]);
+                    io.to(socketIdOtherPlayer[0]).emit(
+                        "challenge accepted",
+                        userId
+                    );
                 })
                 .catch((err) => {
                     console.log("error in acceptChallenge", err);
                 });
         } else if (data.buttonText === btn.BUTTON_TEXT.CANCEL_CHALLENGE) {
             console.log("button text is", data.buttonText);
-            db.cancelChallenge(userId, data.otherPlayerId)
+            db.cancelChallenge(userId, data.otherUserId)
                 .then(() => {
                     button.buttonText = btn.BUTTON_TEXT.MAKE_CHALLENGE;
                     socket.emit("update Button", button);
@@ -121,6 +134,11 @@ io.on("connection", (socket) => {
                     console.log("error in cancelChallenge", err);
                 });
         }
+
+        //delete otherUser with challenge status from array to not duplicate onliners
+        arrUniqueOnliners = arrUniqueOnliners.filter(
+            (id) => id !== data.otherPlayerId
+        );
     });
 
     db.getChallengeStatus(userId)
@@ -145,13 +163,13 @@ io.on("connection", (socket) => {
 
             db.getOnlinePlayersByIds(arrOfIdsNoChallenge)
                 .then(({ rows }) => {
-                    console.log("getOnlinePlayersByIds", rows);
+                    // console.log("getOnlinePlayersByIds", rows);
 
                     let onliners = [...rows, ...onlinersWithChallenge];
 
                     //console.log("all onliners", onliners);
 
-                    io.emit("onliners", {
+                    socket.emit("onliners", {
                         onliners: onliners,
                     });
 

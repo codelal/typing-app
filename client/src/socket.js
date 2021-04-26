@@ -8,12 +8,17 @@ export const init = (store) => {
     }
 
     socket.on("onliners", (data) => {
-        console.log("onliners socket.js", data);
+        // console.log("onliners socket.js", data);
         store.dispatch(receiveOnliners(data));
     });
 
     socket.on("update Button", (data) => {
-        console.log("update Button in socket.js", data);
+        //console.log("update Button in socket.js", data);
         store.dispatch(updateButton(data));
+    });
+
+    socket.on("play duel", (data) => {
+        console.log("play duel", data);
+        location.replace("/play-duel-secret-link");
     });
 };

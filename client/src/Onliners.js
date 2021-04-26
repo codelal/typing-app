@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { socket } from "./socket";
+import { BUTTON_TEXT } from "./buttonText";
+import ChallengeAlert from "./ChallengeAlert";
 
-export const BUTTON_TEXT = {
-    MAKE_CHALLENGE: "Challenge",
-    CANCEL_CHALLENGE: "Cancel Challenge",
-    ACCEPT_CHALLENGE: "Accept Challenge",
-};
-
-export default function ChallengeOthers() {
+export default function Onliners() {
     const [currentPlayerId, setCurrentPlayerId] = useState();
+
     const noPendingChallenge = useSelector(
         (state) =>
             state.onliners &&
-            state.onliners.filter((status) => status.accepted === undefined)
+            state.onliners.filter((status) => status.accepted == null)
     );
-    console.log("noPendingChallenge", noPendingChallenge);
+    // console.log("noPendingChallenge", noPendingChallenge);
 
     const challengedPlayers = useSelector(
         (state) =>
@@ -26,12 +23,14 @@ export default function ChallengeOthers() {
                     status.sender_id === currentPlayerId
             )
     );
+    //console.log("challengedPlayers", challengedPlayers);
 
     const challengingPlayers = useSelector(
         (state) =>
             state.onliners &&
             state.onliners.filter((status) => status.accepted === true)
     );
+    // console.log("challengingPlayers", challengingPlayers);
 
     useEffect(() => {
         socket.on("current player", (data) => {
@@ -39,15 +38,15 @@ export default function ChallengeOthers() {
         });
     }, [currentPlayerId]);
 
-    const clickButton = (otherPlayerId, event) => {
+    const clickButton = (otherUserId, event) => {
         socket.emit("button click", {
-            otherPlayerId: otherPlayerId,
+            otherUserId: otherUserId,
             buttonText: event.target.innerText,
         });
     };
 
     const noChallenge = (
-        <div className="online-players">
+        <div className="onliners">
             {noPendingChallenge &&
                 noPendingChallenge.map((player) => (
                     <div className="online-player" key={player.id}>
@@ -70,7 +69,7 @@ export default function ChallengeOthers() {
         </div>
     );
     const challengers = (
-        <div className="online-players">
+        <div className="onliners">
             {challengingPlayers &&
                 challengingPlayers.map((player) => (
                     <div className="online-player" key={player.id}>
@@ -93,7 +92,7 @@ export default function ChallengeOthers() {
         </div>
     );
     const challenged = (
-        <div className="online-players">
+        <div className="onliners">
             {challengedPlayers &&
                 challengedPlayers.map((player) => (
                     <div className="online-player" key={player.id}>
@@ -118,7 +117,8 @@ export default function ChallengeOthers() {
 
     return (
         <div className="onliners-container">
-            <h1>Challenge Others</h1>
+            <h1>Onliners</h1>
+            <ChallengeAlert />
             {noChallenge}
             {challengers}
             {challenged}

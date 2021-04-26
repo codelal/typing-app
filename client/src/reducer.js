@@ -68,15 +68,15 @@ export function reducer(state = {}, action) {
         };
     }
 
-  
-    if (action.type == "ACCEPT_CHALLENGE") {
+    if (action.type == "MAKE_CHALLENGE") {
         state = {
             ...state,
             onliners: state.onliners.map((onliner) => {
                 if (onliner.id == action.otherUserId) {
                     return {
                         ...onliner,
-                        accepted: true,
+                        accepted: false,
+                        sender_id: action.currentUserId,
                     };
                 } else {
                     return onliner;
@@ -85,14 +85,21 @@ export function reducer(state = {}, action) {
         };
     }
 
-    // if (action.type == "CANCEL_CHALLENGE") {
-    //     state = {
-    //         ...state,
-    //         onliners: state.onliners.filter(
-    //             (friend) => friend.id !== action.otherUserId
-    //         ),
-    //     };
-    // }
+    if (action.type == "CANCEL_CHALLENGE") {
+        state = {
+            ...state,
+            onliners: state.onliners.map((onliner) => {
+                if (onliner.id == action.otherUserId) {
+                    return {
+                        ...onliner,
+                        accepted: null,
+                    };
+                } else {
+                    return onliner;
+                }
+            }),
+        };
+    }
 
     return state;
 }

@@ -13,7 +13,7 @@ body {
         "footer";
     grid-template-rows: 20% 70% 10%;
     justify-items: center;
-    border: 0.2rem solid white;
+    /* border: 0.2rem solid white; */
     height: 100vh;
     width: auto;
 }
@@ -31,7 +31,7 @@ h2 {
     grid-area: main;
     display: grid;
     justify-items: center;
-    border: 0.2rem solid rgb(163, 61, 61);
+    /* border: 0.2rem solid rgb(163, 61, 61); */
     width: 90vw;
     height: 80vh;
 }
@@ -192,5 +192,21 @@ a {
 } */
 
 h1 {
-    height:2rem;
+    height: 2rem;
+}
+
+.challenge-alert {
+    width: 15rem;
+    height: auto;
+    background-color: #5f968e;
+    border: 0.2rem solid white;
+    border-radius: 10px;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    letter-spacing: 1.2px;
+    text-align: center;
+}
+.challenge-alert a {
+    color: white;
 }

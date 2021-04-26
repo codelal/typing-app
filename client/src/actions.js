@@ -1,5 +1,5 @@
 import axios from "./axios";
-import { BUTTON_TEXT } from "./ChallengeOthers";
+import { BUTTON_TEXT } from "./buttonText";
 
 export async function receiveText() {
     const { data } = await axios.get(
@@ -79,7 +79,7 @@ export async function submitUserName(input) {
 
     const { data } = await axios.post("/api/submit-user-name", userName);
     if (data.success == true) {
-        location.replace("/challenge-others");
+        location.replace("/onliners");
         return {
             type: "USER NAME",
             userName: data.userName,
@@ -98,10 +98,12 @@ export function receiveOnliners(data) {
 export function updateButton(data) {
     console.log("updateButton in action", data);
 
+    //If user made a challenge
     if (data.buttonText == BUTTON_TEXT.CANCEL_CHALLENGE) {
         return {
-            type: "ACCEPT_CHALLENGE",
+            type: "MAKE_CHALLENGE",
             otherUserId: data.otherUserId,
+            currentUserId: data.currentUserId,
         };
     }
 
@@ -109,6 +111,8 @@ export function updateButton(data) {
         return {
             type: "CANCEL_CHALLENGE",
             otherUserId: data.otherUserId,
+            currentUserId: data.currentUserId,
         };
     }
+
 }
