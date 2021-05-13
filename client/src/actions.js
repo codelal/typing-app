@@ -114,5 +114,4 @@ export function updateButton(data) {
             currentUserId: data.currentUserId,
         };
     }
-
 }

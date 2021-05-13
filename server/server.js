@@ -94,7 +94,7 @@ io.on("connection", (socket) => {
             return onlineUsers[key] === data.otherUserId;
         });
 
-        console.log("socketIdOtherPlayer", socketIdOtherPlayer[0]);
+        // console.log("socketIdOtherPlayer", socketIdOtherPlayer[0]);
 
         if (data.buttonText === btn.BUTTON_TEXT.MAKE_CHALLENGE) {
             console.log("button text is", data.buttonText);
@@ -108,7 +108,7 @@ io.on("connection", (socket) => {
                     console.log("error in insertChallengeRequest", err);
                 });
         } else if (data.buttonText === btn.BUTTON_TEXT.ACCEPT_CHALLENGE) {
-            console.log("button text is", data.buttonText);
+            // console.log("button text is", data.buttonText);
             db.acceptChallenge()
                 .then(({ rows }) => {
                     console.log("update in accept Challenge is done", rows);
@@ -143,10 +143,10 @@ io.on("connection", (socket) => {
 
     db.getChallengeStatus(userId)
         .then(({ rows }) => {
-            //console.log("getChallengeStatus", rows);
+            console.log("getChallengeStatus", rows);
             let onlinersWithChallenge = rows;
 
-            // console.log("onlinersWithChallenge", onlinersWithChallenge);
+            console.log("onlinersWithChallenge", onlinersWithChallenge);
 
             let arrOfIdsChallengeStatus = [];
             rows.forEach((row) => {
@@ -167,9 +167,9 @@ io.on("connection", (socket) => {
 
                     let onliners = [...rows, ...onlinersWithChallenge];
 
-                    //console.log("all onliners", onliners);
+                    console.log("all onliners", onliners);
 
-                    socket.emit("onliners", {
+                    io.emit("onliners", {
                         onliners: onliners,
                     });
 
