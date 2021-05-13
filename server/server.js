@@ -77,14 +77,14 @@ io.on("connection", (socket) => {
     }
 
     onlineUsers[socket.id] = userId;
-    console.log("onlineUsers in socket", onlineUsers);
+    //console.log("onlineUsers in socket", onlineUsers);
 
     // Onliners without Challenge status
     let arrUniqueOnliners = [...new Set(Object.values(onlineUsers))];
     //console.log("arrOfIds BEFORE", arrUniqueOnliners);
 
     socket.on("button click", (data) => {
-        console.log("button click comes in", data);
+        console.log("button click comes in", data, data.buttonText);
         let button = {
             otherUserId: data.otherUserId,
             currentUserId: userId,
@@ -94,7 +94,7 @@ io.on("connection", (socket) => {
             return onlineUsers[key] === data.otherUserId;
         });
 
-        // console.log("socketIdOtherPlayer", socketIdOtherPlayer[0]);
+        console.log("socketIdOtherPlayer", socketIdOtherPlayer[0]);
 
         if (data.buttonText === btn.BUTTON_TEXT.MAKE_CHALLENGE) {
             console.log("button text is", data.buttonText);
@@ -146,7 +146,7 @@ io.on("connection", (socket) => {
             console.log("getChallengeStatus", rows);
             let onlinersWithChallenge = rows;
 
-            console.log("onlinersWithChallenge", onlinersWithChallenge);
+            //console.log("onlinersWithChallenge", onlinersWithChallenge);
 
             let arrOfIdsChallengeStatus = [];
             rows.forEach((row) => {
@@ -167,7 +167,7 @@ io.on("connection", (socket) => {
 
                     let onliners = [...rows, ...onlinersWithChallenge];
 
-                    console.log("all onliners", onliners);
+                    //console.log("all onliners", onliners);
 
                     io.emit("onliners", {
                         onliners: onliners,

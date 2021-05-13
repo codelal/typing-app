@@ -17,16 +17,21 @@ export default function ChallengeAlert() {
     }, [getChallenge]);
 
     socket.on("challenge accepted", (data) => {
-        console.log(" challenge accepted in socket.js", data);
+        console.log("challenge accepted in socket.js", data);
         setChallengeAccepted(true);
     });
 
-    const acceptChallenge = () => {
+    const buttonClick = (event) => {
         console.log("click accept challenge");
         socket.emit("button click", {
             otherUserId: otherUserId,
-            buttonText: BUTTON_TEXT.ACCEPT_CHALLENGE,
+            buttonText: event.target.innerText,
         });
+    };
+
+    const playLater = () => {
+        // Write here Code to change ButtonText
+        setGetChallenge(false);
     };
 
     return (
@@ -36,15 +41,25 @@ export default function ChallengeAlert() {
                     <p
                         className="close-x"
                         onClick={() => setGetChallenge(false)}
-                    >
+                    >‚
                         X
                     </p>
                     <p>Wants to play with you</p>
-                    <p className="answer" onClick={() => acceptChallenge()}>
-                        yes
+                    <p
+                        className="answer"
+                        onClick={(event) => buttonClick(event)}
+                    >
+                        {BUTTON_TEXT.ACCEPT_CHALLENGE}
                     </p>
-                    <p className="answer">no</p>
-                    <p className="answer">maybe later</p>
+                    <p
+                        className="answer"
+                        onClick={(event) => buttonClick(event)}
+                    >
+                        {BUTTON_TEXT.REJECT_CHALLENGE}
+                    </p>
+                    <p className="answer" onClick={() => playLater()}>
+                        maybe later
+                    </p>
                 </div>
             )}
             {challengeAccepted && (

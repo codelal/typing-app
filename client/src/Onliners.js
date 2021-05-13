@@ -12,7 +12,7 @@ export default function Onliners() {
             state.onliners &&
             state.onliners.filter((status) => status.accepted == null)
     );
-    console.log("noPendingChallenge", noPendingChallenge);
+    //console.log("noPendingChallenge", noPendingChallenge);
 
     const challengedPlayers = useSelector(
         (state) =>
@@ -23,14 +23,14 @@ export default function Onliners() {
                     status.sender_id === currentPlayerId
             )
     );
-    console.log("challengedPlayers", challengedPlayers);
+    //console.log("challengedPlayers", challengedPlayers);
 
     const challengingPlayers = useSelector(
         (state) =>
             state.onliners &&
             state.onliners.filter((status) => status.accepted === true)
     );
-    console.log("challengingPlayers", challengingPlayers);
+    //console.log("challengingPlayers", challengingPlayers);
 
     useEffect(() => {
         socket.on("current player", (data) => {

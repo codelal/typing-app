@@ -8,7 +8,7 @@ export const init = (store) => {
     }
 
     socket.on("onliners", (data) => {
-        console.log("onliners socket.js", data);
+        // console.log("onliners socket.js", data);
         store.dispatch(receiveOnliners(data));
     });
 
