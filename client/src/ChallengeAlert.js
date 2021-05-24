@@ -22,29 +22,25 @@ export default function ChallengeAlert() {
     });
 
     const buttonClick = (event) => {
-        console.log("click accept challenge");
+        console.log("button click challenge");
         socket.emit("button click", {
             otherUserId: otherUserId,
             buttonText: event.target.innerText,
         });
-    };
-
-    const playLater = () => {
-        // Write here Code to change ButtonText
         setGetChallenge(false);
     };
+
+    // const playLater = () => {
+    //     // Write here Code to change ButtonText
+    //     console.log("maybe later runs");
+    //     setGetChallenge(false);
+    // };
 
     return (
         <>
             {getChallenge && (
                 <div className="challenge-alert">
-                    <p
-                        className="close-x"
-                        onClick={() => setGetChallenge(false)}
-                    >‚
-                        X
-                    </p>
-                    <p>Wants to play with you</p>
+                    ‚<p>Wants to play with you</p>
                     <p
                         className="answer"
                         onClick={(event) => buttonClick(event)}
@@ -56,9 +52,6 @@ export default function ChallengeAlert() {
                         onClick={(event) => buttonClick(event)}
                     >
                         {BUTTON_TEXT.REJECT_CHALLENGE}
-                    </p>
-                    <p className="answer" onClick={() => playLater()}>
-                        maybe later
                     </p>
                 </div>
             )}

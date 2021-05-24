@@ -94,7 +94,7 @@ io.on("connection", (socket) => {
             return onlineUsers[key] === data.otherUserId;
         });
 
-        console.log("socketIdOtherPlayer", socketIdOtherPlayer[0]);
+        //console.log("socketIdOtherPlayer", socketIdOtherPlayer[0]);
 
         if (data.buttonText === btn.BUTTON_TEXT.MAKE_CHALLENGE) {
             console.log("button text is", data.buttonText);
@@ -108,8 +108,8 @@ io.on("connection", (socket) => {
                     console.log("error in insertChallengeRequest", err);
                 });
         } else if (data.buttonText === btn.BUTTON_TEXT.ACCEPT_CHALLENGE) {
-            // console.log("button text is", data.buttonText);
-            db.acceptChallenge()
+            console.log("button text is", data.buttonText);
+            db.acceptChallenge(userId, data.otherUserId)
                 .then(({ rows }) => {
                     console.log("update in accept Challenge is done", rows);
                     //generate secret link
@@ -123,12 +123,14 @@ io.on("connection", (socket) => {
                 .catch((err) => {
                     console.log("error in acceptChallenge", err);
                 });
-        } else if (data.buttonText === btn.BUTTON_TEXT.CANCEL_CHALLENGE) {
+        } else if (data.buttonText === btn.BUTTON_TEXT.REJECT_CHALLENGE) {
             console.log("button text is", data.buttonText);
             db.cancelChallenge(userId, data.otherUserId)
                 .then(() => {
+                    console.log("challnge rejected delete is done");
                     button.buttonText = btn.BUTTON_TEXT.MAKE_CHALLENGE;
-                    socket.emit("update Button", button);
+                    //socket.emit("update Button", button);
+                    io.to(socketIdOtherPlayer[0]).emit("update Button", button);
                 })
                 .catch((err) => {
                     console.log("error in cancelChallenge", err);

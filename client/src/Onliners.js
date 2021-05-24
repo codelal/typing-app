@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { socket } from "./socket";
 import { BUTTON_TEXT } from "./buttonText";
 import ChallengeAlert from "./ChallengeAlert";
+//import { updateButton } from "./actions";
 
 export default function Onliners() {
     const [currentPlayerId, setCurrentPlayerId] = useState();
@@ -12,7 +13,7 @@ export default function Onliners() {
             state.onliners &&
             state.onliners.filter((status) => status.accepted == null)
     );
-    //console.log("noPendingChallenge", noPendingChallenge);
+    console.log("noPendingChallenge", noPendingChallenge);
 
     const challengedPlayers = useSelector(
         (state) =>
